@@ -2,6 +2,8 @@
 
 require_once 'parser.php';
 
+const AUTH_FAILURE_THRESHOLD = 20;
+
 function analyzeLog(string $filePath): array
 {
     $handle = fopen($filePath, 'r');
@@ -47,4 +49,17 @@ function analyzeLog(string $filePath): array
     arsort($result['auth_failures']);
 
     return $result;
+}
+
+function findSuspiciousIps(array $authFailures, int $threshold = AUTH_FAILURE_THRESHOLD): array
+{
+    $suspicious = [];
+
+    foreach ($authFailures as $ip => $count) {
+        if ($count > $threshold) {
+            $suspicious[$ip] = $count;
+        }
+    }
+
+    return $suspicious;
 }
