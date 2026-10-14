@@ -22,4 +22,4 @@ for ($i = 0; $i < 500; $i++) {
 }
 
 fclose($file);
-echo "Готово: sample-access.log\n";
+echo "Ready: sample-access.log\n";
