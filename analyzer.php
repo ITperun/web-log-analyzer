@@ -18,6 +18,7 @@ function analyzeLog(string $filePath): array
         'by_status' => [],
         'by_path' => [],
         'auth_failures' => [],
+        'night_admin' => [],
     ];
 
     while (($line = fgets($handle)) !== false) {
@@ -40,6 +41,17 @@ function analyzeLog(string $filePath): array
 
         if ($status === 401 || $status === 403) {
             $result['auth_failures'][$ip] = ($result['auth_failures'][$ip] ?? 0) + 1;
+        }
+
+        if ($entry['user'] === 'admin' && $status === 200) {
+            $time = DateTimeImmutable::createFromFormat('d/M/Y:H:i:s O', $entry['time']);
+
+            if ($time !== false && (int) $time->format('H') < 5) {
+                $result['night_admin'][] = [
+                    'ip' => $ip,
+                    'time' => $entry['time'],
+                ];
+            }
         }
     }
 
