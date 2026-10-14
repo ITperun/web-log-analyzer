@@ -24,6 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <title>Web Log Analyzer</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <h1>Web Log Analyzer</h1>
@@ -48,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <th>Failed Logins</th>
             </tr>
             <?php foreach (array_slice($result['by_ip'], 0, 10, true) as $ip => $count): ?>
-                <tr style="<?= isset($suspicious[$ip]) ? 'background: #fdd;' : '' ?>">
+                <tr class="<?= isset($suspicious[$ip]) ? 'suspicious' : '' ?>">
                     <td><?= htmlspecialchars($ip) ?></td>
                     <td><?= $count ?></td>
                     <td><?= $result['auth_failures'][$ip] ?? 0 ?></td>
