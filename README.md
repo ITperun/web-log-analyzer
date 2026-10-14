@@ -2,6 +2,8 @@
 
 A small PHP tool that parses web server access logs (Apache/Nginx Combined format) and reports the most active IP addresses, response status distribution, and suspicious activity.
 
+![Analysis result](docs/screenshot.png)
+
 ## Features
 
 - Parses access log lines into structured data (IP, user, time, method, path, status, size)
