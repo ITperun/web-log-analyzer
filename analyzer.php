@@ -3,6 +3,7 @@
 require_once 'parser.php';
 
 const AUTH_FAILURE_THRESHOLD = 20;
+const MAX_SKIPPED_RATIO = 0.5;
 
 function analyzeLog(string $filePath): array
 {
@@ -74,4 +75,15 @@ function findSuspiciousIps(array $authFailures, int $threshold = AUTH_FAILURE_TH
     }
 
     return $suspicious;
+}
+
+function looksLikeAccessLog(array $result): bool
+{
+    $lines = $result['total'] + $result['skipped'];
+
+    if ($lines === 0) {
+        return false;
+    }
+
+    return $result['total'] / $lines >= (1 - MAX_SKIPPED_RATIO);
 }

@@ -15,7 +15,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error = 'File size exceeds the 10MB limit.';
     } else {
         $result = analyzeLog($file['tmp_name']);
-        $suspicious = findSuspiciousIps($result['auth_failures']);
+
+        if (!looksLikeAccessLog($result)) {
+            $error = 'File does not look like a web server log or it is empty.';
+            $result = null;
+        } else {
+            $suspicious = findSuspiciousIps($result['auth_failures']);
+        }
     }
 }
 ?>
