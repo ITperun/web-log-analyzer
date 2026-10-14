@@ -21,5 +21,15 @@ for ($i = 0; $i < 500; $i++) {
     fwrite($file, $line . PHP_EOL);
 }
 
+$adminLines = [
+    '10.0.0.8 - admin [14/Oct/2026:03:15:00 +0000] "POST /login HTTP/1.1" 200 512',
+    '10.0.0.8 - admin [14/Oct/2026:02:47:00 +0000] "POST /login HTTP/1.1" 200 512',
+    '10.0.0.8 - admin [14/Oct/2026:10:30:00 +0000] "POST /login HTTP/1.1" 200 512',
+];
+
+foreach ($adminLines as $line) {
+    fwrite($file, $line . PHP_EOL);
+}
+
 fclose($file);
 echo "Ready: sample-access.log\n";
