@@ -33,14 +33,26 @@ Generate a sample log file:
 php generate_sample_log.php
 ```
 
+Start the built-in PHP server from the project folder:
+
+```bash
+php -S localhost:8000
+```
+
+Open `http://localhost:8000`, upload a log file, and click Analyze.
+
 ## Project structure
 
 - `parser.php` - parses a single log line with a regular expression
 - `analyzer.php` - reads the whole file and builds statistics and detection results
 - `generate_sample_log.php` - creates a test log with random traffic and a simulated attack
 
+## Input validation
+
+The file input in the form uses `accept=".log,.txt"`, but this is only a hint for the user: the browser can be bypassed. The real check runs on the server. The analyzer parses each line, and if more than half of the lines cannot be parsed or the file is empty, it is rejected with an error message.
+
 ## Roadmap
 
-- [ ] Web interface with log file upload
+- [x] Web interface with log file upload
 - [ ] Date filtering
 - [ ] Support for other log formats
